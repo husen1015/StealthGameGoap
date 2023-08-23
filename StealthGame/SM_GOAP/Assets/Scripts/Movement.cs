@@ -32,7 +32,7 @@ public class Movement : MonoBehaviour
         {
             accelerate= false;
         }
-        Debug.Log(accelerate);
+        //Debug.Log(accelerate);
     }
     private void FixedUpdate()
     {
