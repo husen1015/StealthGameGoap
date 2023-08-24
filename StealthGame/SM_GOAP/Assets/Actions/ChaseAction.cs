@@ -13,11 +13,16 @@ public class ChaseAction : Action
     public override bool PrePrefom()
     {
         target = player;
+
+        agent.SetDestination(player.transform.position);
         return true;
     }
     private void Update()
     {
-        target = player;
+        if (target != null && running) // Check if the action is currently running
+        {
+            agent.SetDestination(target.transform.position);
+        }
     }
 
 

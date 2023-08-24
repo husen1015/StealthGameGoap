@@ -73,23 +73,9 @@ public class GameAgent : MonoBehaviour
     protected void RecalculatePlan()
     {
         planner = null;
+        currAction.running = false; //possibly this needs to be changed in the late update as well
         currAction = null;
-        //planner = new Planner();
-        ////sort goals according to improtance in a descendign order
-        //var sortedGoals = from entry in SubGoals orderby entry.Value descending select entry;
-        ////try to create a plan for a goal sttarting from the most important goal
-        ////UnityEditor.EditorApplication.isPlaying = false;
-        //foreach (KeyValuePair<SubGoal, int> sortedGoal in sortedGoals)
-        //{
-        //    Debug.Log(sortedGoal.Value);
-        //    actionsQueue = planner.plan(actions, sortedGoal.Key.SubGoals, null);
-        //    if (actionsQueue != null)
-        //    {
-        //        currentGoal = sortedGoal.Key;
-        //        Debug.Log($"current goal is {sortedGoal.Value}");
-        //        break;
-        //    }
-        //}
+
     }
     private void LateUpdate()
     {
