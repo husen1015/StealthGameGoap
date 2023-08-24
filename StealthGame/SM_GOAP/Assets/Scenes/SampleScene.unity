@@ -310,12 +310,11 @@ MonoBehaviour:
   duration: 1
   preConditions: []
   afterEffects:
-  - key: Patrol
+  - key: Patrolling
     value: 0
   agent: {fileID: 0}
   running: 0
   waypoints: []
-  nextWaypointIndx: 0
 --- !u!114 &331107762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,6 +329,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions: []
   currAction: {fileID: 0}
+--- !u!114 &331107770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331107760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b5e2899d1d68104c9c609894b6a9171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Chase
+  cost: 1
+  target: {fileID: 661347556}
+  targetTag: 
+  duration: 0
+  preConditions:
+  - key: CanSeePlayer
+    value: 0
+  afterEffects:
+  - key: Chasing
+    value: 0
+  agent: {fileID: 0}
+  running: 0
 --- !u!1 &354190336
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,7 +1018,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4856266696040552286, guid: 5beefb8163c0e7f4292f788d5bee9374, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -22.1
+      value: -28.66
       objectReference: {fileID: 0}
     - target: {fileID: 4856266696040552286, guid: 5beefb8163c0e7f4292f788d5bee9374, type: 3}
       propertyPath: m_LocalRotation.w

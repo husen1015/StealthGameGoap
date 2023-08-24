@@ -26,7 +26,7 @@ public class GameAgent : MonoBehaviour
     Queue<Action> actionsQueue;
     public Action currAction;
     SubGoal currentGoal;
-
+    bool recalculated = false;
     protected void Start()
     {
         //get actions assigned in inspector 
@@ -36,7 +36,21 @@ public class GameAgent : MonoBehaviour
             actions.Add(action);
         }
     }
-
+    private void Update()
+    {
+        if (!recalculated && FOV.Instance.canSeePlayer)
+        {
+            GameWorld.Instance.GetWorldStates1().SetState("CanSeePlayer", 1);
+            Debug.Log($"world states includes new state? = {GameWorld.Instance.GetWorldStates1().HasState("CanSeePlayer")}");
+            RecalculatePlan();
+            recalculated= true;
+        }
+        else if(!FOV.Instance.canSeePlayer) 
+        {
+            GameWorld.Instance.GetWorldStates1().RemoveState("CanSeePlayer");
+            recalculated= false;
+        }
+    }
 
     bool invoked = false; //action invoked?
     void CompleteAction()
@@ -45,6 +59,28 @@ public class GameAgent : MonoBehaviour
         currAction.running= false;
         currAction.PostPrefom();
         invoked = false;
+    }
+
+    protected void RecalculatePlan()
+    {
+        planner = null;
+        currAction = null;
+        //planner = new Planner();
+        ////sort goals according to improtance in a descendign order
+        //var sortedGoals = from entry in SubGoals orderby entry.Value descending select entry;
+        ////try to create a plan for a goal sttarting from the most important goal
+        ////UnityEditor.EditorApplication.isPlaying = false;
+        //foreach (KeyValuePair<SubGoal, int> sortedGoal in sortedGoals)
+        //{
+        //    Debug.Log(sortedGoal.Value);
+        //    actionsQueue = planner.plan(actions, sortedGoal.Key.SubGoals, null);
+        //    if (actionsQueue != null)
+        //    {
+        //        currentGoal = sortedGoal.Key;
+        //        Debug.Log($"current goal is {sortedGoal.Value}");
+        //        break;
+        //    }
+        //}
     }
     private void LateUpdate()
     {
@@ -64,6 +100,8 @@ public class GameAgent : MonoBehaviour
             }
             return;
         }
+
+        //TODO- agent has a plan but a new better plan is currently available
 
         //agent has no plan
         if(planner == null || actionsQueue == null)

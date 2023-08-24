@@ -23,4 +23,8 @@ public sealed class GameWorld
     {
         return worldStates.states;
     }
+    public WorldStates GetWorldStates1()
+    {
+        return worldStates;
+    }
 }

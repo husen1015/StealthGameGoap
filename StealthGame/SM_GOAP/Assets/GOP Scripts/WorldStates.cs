@@ -8,6 +8,12 @@ public class WorldState
 {
     public string key;
     public int value;
+
+    public WorldState(string key, int value) 
+    {
+        this.key = key;
+        this.value = value;
+    }
 }
 public class WorldStates 
 {
@@ -41,6 +47,13 @@ public class WorldStates
             }
         }
 
+    }
+    public void RemoveState(string key)
+    {
+        if (states.ContainsKey(key))
+        {
+            states.Remove(key);
+        }
     }
 
     //set state value to given value

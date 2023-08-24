@@ -60,7 +60,6 @@ public class FOV : MonoBehaviour
                 //raycast to check whether enemy can see player and no obstruction is in the way
                 if (!Physics.Raycast(transform.position, dirToTarget, distanceToTarget, obstructionMask))
                 {
-                    Debug.Log(canSeePlayer);
                     canSeePlayer = true;
                 }
                 else

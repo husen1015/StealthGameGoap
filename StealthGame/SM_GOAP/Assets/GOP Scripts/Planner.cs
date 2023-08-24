@@ -34,8 +34,15 @@ public class Planner
         {
             if (action.IsAcheivable())
             {
+                
                 usableActions.Add(action);
             }
+        }
+        foreach(Action action in usableActions)
+        {
+            //UnityEngine.Debug.Log("action: ");
+
+            //UnityEngine.Debug.Log(action.ToString());
         }
         List<Node> leaves = new List<Node>();
         Node start = new Node(null, 0, GameWorld.Instance.GetWorldStates(), null); //root node 
