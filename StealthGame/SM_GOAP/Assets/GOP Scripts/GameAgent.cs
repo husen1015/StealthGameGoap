@@ -26,9 +26,11 @@ public class GameAgent : MonoBehaviour
     Queue<Action> actionsQueue;
     public Action currAction;
     SubGoal currentGoal;
-    bool recalculated = false;
+    bool prevCanSeePlayer = false;
+    FOV fov;
     protected void Start()
     {
+        fov = FOV.Instance;
         //get actions assigned in inspector 
         Action[] actionsArr = this.GetComponents<Action>();
         foreach(Action action in actionsArr)
@@ -38,18 +40,25 @@ public class GameAgent : MonoBehaviour
     }
     private void Update()
     {
-        if (!recalculated && FOV.Instance.canSeePlayer)
+        if (!(fov.canSeePlayer ^ prevCanSeePlayer))//using xor to find when both of them agree(i.e. both true or false) to signal whether there was a change in the status
+        {
+            return;
+        }
+        if (fov.canSeePlayer)
         {
             GameWorld.Instance.GetWorldStates1().SetState("CanSeePlayer", 1);
             Debug.Log($"world states includes new state? = {GameWorld.Instance.GetWorldStates1().HasState("CanSeePlayer")}");
             RecalculatePlan();
-            recalculated= true;
+            prevCanSeePlayer = true;
         }
-        else if(!FOV.Instance.canSeePlayer) 
+        else if(!fov.canSeePlayer) 
         {
             GameWorld.Instance.GetWorldStates1().RemoveState("CanSeePlayer");
-            recalculated= false;
+            RecalculatePlan();
+            prevCanSeePlayer = false;
         }
+        
+        
     }
 
     bool invoked = false; //action invoked?

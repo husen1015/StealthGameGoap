@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ChaseAction : Action
 {
+    public GameObject player;
     public override bool PostPrefom()
     {
         return true;
@@ -11,7 +12,12 @@ public class ChaseAction : Action
 
     public override bool PrePrefom()
     {
+        target = player;
         return true;
+    }
+    private void Update()
+    {
+        target = player;
     }
 
 

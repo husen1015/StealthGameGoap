@@ -343,7 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Chase
   cost: 1
-  target: {fileID: 661347556}
+  target: {fileID: 0}
   targetTag: 
   duration: 0
   preConditions:
@@ -354,6 +354,7 @@ MonoBehaviour:
     value: 0
   agent: {fileID: 0}
   running: 0
+  player: {fileID: 661347556}
 --- !u!1 &354190336
 GameObject:
   m_ObjectHideFlags: 0
