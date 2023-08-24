@@ -355,6 +355,32 @@ MonoBehaviour:
   agent: {fileID: 0}
   running: 0
   player: {fileID: 661347556}
+--- !u!114 &331107778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331107760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0060607fddcde47ac4046ba9b81f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Investigate
+  cost: 1
+  target: {fileID: 661347556}
+  targetTag: 
+  duration: 0
+  preConditions:
+  - key: Sighted
+    value: 1
+  afterEffects:
+  - key: Investigated
+    value: 0
+  agent: {fileID: 0}
+  running: 0
+  player: {fileID: 661347556}
 --- !u!1 &354190336
 GameObject:
   m_ObjectHideFlags: 0

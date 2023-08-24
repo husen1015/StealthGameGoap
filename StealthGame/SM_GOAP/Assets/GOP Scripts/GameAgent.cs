@@ -10,8 +10,10 @@ public class SubGoal
     //each goal can have multiple subgoals represented by this class
     public Dictionary<string, int> SubGoals;
     public bool repeat; // signales whether or not this goal should be triggered again after its satisfies 
+    public string name;
     public SubGoal(string goal, int priority, bool repeat) 
     {
+        name = goal;
         SubGoals= new Dictionary<string, int>();
         SubGoals.Add(goal, priority);
         this.repeat= repeat;
@@ -73,6 +75,7 @@ public class GameAgent : MonoBehaviour
     protected void RecalculatePlan()
     {
         planner = null;
+        currAction.PostPrefom();
         currAction.running = false; //possibly this needs to be changed in the late update as well
         currAction = null;
 
@@ -84,8 +87,8 @@ public class GameAgent : MonoBehaviour
         if(currAction!= null && currAction.running)
         {
             float distanceToTarget = Vector3.Distance(currAction.target.transform.position, transform.position);
-            
-            if(currAction.agent.hasPath && distanceToTarget < 2f)
+            Debug.Log(distanceToTarget);
+            if (currAction.agent.hasPath && distanceToTarget < 2f)
             {
                 if (!invoked)
                 {
@@ -96,14 +99,13 @@ public class GameAgent : MonoBehaviour
             return;
         }
 
-        //TODO- agent has a plan but a new better plan is currently available
-
         //agent has no plan
         if(planner == null || actionsQueue == null)
         {
             planner = new Planner();
             //sort goals according to improtance in a descendign order
             var sortedGoals = from entry in SubGoals orderby entry.Value descending select entry;
+
             //try to create a plan for a goal sttarting from the most important goal
             //UnityEditor.EditorApplication.isPlaying = false;
             foreach (KeyValuePair<SubGoal, int> sortedGoal in sortedGoals)
@@ -112,6 +114,7 @@ public class GameAgent : MonoBehaviour
                 if(actionsQueue != null)
                 {
                     currentGoal = sortedGoal.Key;
+                    Debug.Log($"cuurentGoal: {currentGoal.name}");
                     break;
                 }
             }
@@ -119,6 +122,7 @@ public class GameAgent : MonoBehaviour
         //completed all actions
         if(actionsQueue != null && actionsQueue.Count == 0) 
         {
+
             if (!currentGoal.repeat)
             {
                 SubGoals.Remove(currentGoal);
@@ -128,8 +132,12 @@ public class GameAgent : MonoBehaviour
         //there are still actions to do
         if(actionsQueue != null && actionsQueue.Count> 0)
         {
-            currAction = actionsQueue.Dequeue();    
-            if(currAction.PrePrefom()) 
+
+            currAction = actionsQueue.Dequeue();
+            Debug.Log($"currAction: {currAction.Name}");
+
+
+            if (currAction.PrePrefom()) 
             {
                 //if navmesh tag not assigned in inspector assign it with targetTag
                 if(currAction.target == null && currAction.targetTag != "")
