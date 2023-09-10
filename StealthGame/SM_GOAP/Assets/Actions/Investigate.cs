@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,12 @@ using UnityEngine;
 public class Investigate : Action
 {
     public GameObject player;
+    Animator animator;
+
+    private void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
     public override bool PostPrefom()
     {
         Debug.Log("post preforming investigate");
@@ -23,6 +30,18 @@ public class Investigate : Action
 
         return true;
     }
+    IEnumerator stopRunning()
+    {
+        float blendVal = animator.GetFloat("shouldRun");
+        while (blendVal != 0)
+        {
+            blendVal -= Time.deltaTime;
+            blendVal = Math.Max(0, blendVal);
+            animator.SetFloat("shouldRun", blendVal);
+            yield return null;
 
+
+        }
+    }
 
 }
